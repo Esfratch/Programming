@@ -9,7 +9,7 @@ cola [] = error "empty"
 cola (_:xs) = xs
 
 reversa :: [a] -> [a]
-reversa = foldl (\l x -> x:l) []
+reversa = foldl (flip (:)) []
 {-
 reversa l = auxRev l [] where
     auxRev [] _         = []
