@@ -19,10 +19,18 @@ cola (Cons x xs) = xs
 instance Show Numero where
     show Zero = "0"
     show (Succ x) = "S(" ++ show x ++ ")"
-
-data Arbol = Cereza | Rama Arbol Arbol
     
-instance Show Arbol where
-    show Cereza = "o"
+instance Show a => Show (Arbol a) where
+    show (Hoja a) = show a
     show (Rama l r) = "(" ++ show l ++ ")-(" ++ show r ++ ")"
+
+data Arbol a = Hoja a | Rama (Arbol a) (Arbol a)
+
+treetolist :: Arbol a -> Lista a
+treetolist (Hoja x) = Cons x Nil
+treetolist (Rama l r) = treetolist l >=< treetolist r
+
+(>=<) :: Lista a -> Lista a -> Lista a
+Nil >=< x = x
+(Cons x xs) >=< ys = Cons x (xs >=< ys)
 
